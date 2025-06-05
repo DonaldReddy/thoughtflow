@@ -17,7 +17,7 @@ export default function NavBar() {
 	}, [search]);
 
 	return (
-		<div className="flex items-center justify-between p-4 fixed top-0 left-0 w-full max-w-[1600px] bg-white border-b border-gray-300">
+		<div className="flex items-center justify-between p-4 fixed top-0 left-0 w-full max-w-[1600px] bg-white border-b border-gray-300 z-50">
 			<div className="flex items-center gap-x-4">
 				<IoMenu size={30} />
 				<div className="flex items-center gap-x-2">
