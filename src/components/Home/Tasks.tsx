@@ -1,4 +1,4 @@
-import { use, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import TaskInput from "./TaskInput";
 import TaskList from "./TaskList";
 import PinnedTaskList from "./PinnedTaskList";
@@ -8,7 +8,8 @@ import type { Task } from "../../types";
 import { useSearchParams } from "react-router";
 
 export default function Tasks() {
-	const [searchParams, setSearchParams] = useSearchParams();
+	// eslint-disable-next-line unused-vars
+	const [searchParams] = useSearchParams();
 	const search = searchParams.get("search") || "";
 	const timeOutRef = useRef<NodeJS.Timeout | null>(null);
 
