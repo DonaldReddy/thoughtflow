@@ -5,7 +5,7 @@ export default function Layout() {
 	return (
 		<div className="max-w-[1600px] relative">
 			<NavBar />
-			<div className="h-full w-full mt-[5rem]">
+			<div className="h-full w-full pt-[5rem]">
 				<Outlet />
 			</div>
 		</div>

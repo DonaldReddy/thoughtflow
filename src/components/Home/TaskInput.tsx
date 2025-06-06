@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "../../supabase/client";
 import { userStore } from "../../mobx/UserStore";
+import { BsPin, BsPinFill } from "react-icons/bs";
 
 export default function TaskInput() {
 	const [isFocused, setIsFocused] = useState(false);
@@ -8,6 +9,7 @@ export default function TaskInput() {
 	const [note, setNote] = useState({
 		title: "",
 		description: "",
+		pinned: false,
 	});
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -18,14 +20,17 @@ export default function TaskInput() {
 					title: note.title,
 					description: note.description,
 					author: userStore.user?.id,
+					pinned: note.pinned,
 				});
-				setNote({ title: "", description: "" });
+				setNote({ title: "", description: "", pinned: false });
 				setIsFocused(false);
 			}
 		}
 	};
 
 	useEffect(() => {
+		if (!isFocused) return;
+
 		const handleClickOutside = (event: MouseEvent) => {
 			if (
 				containerRef.current &&
@@ -36,11 +41,10 @@ export default function TaskInput() {
 		};
 
 		document.addEventListener("click", handleClickOutside);
-
 		return () => {
 			document.removeEventListener("click", handleClickOutside);
 		};
-	}, []);
+	}, [isFocused]);
 
 	return (
 		<div className="flex justify-center">
@@ -58,7 +62,7 @@ export default function TaskInput() {
 					className=" shadow-black/20 shadow-[0_0_10px_5px] p-2 rounded space-y-1"
 					ref={containerRef}
 				>
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmit} className="relative">
 						<input
 							type="text"
 							placeholder="Title"
@@ -66,6 +70,27 @@ export default function TaskInput() {
 							value={note.title}
 							onChange={(e) => setNote({ ...note, title: e.target.value })}
 						/>
+						{!note.pinned && (
+							<BsPin
+								size={24}
+								onClick={(e) => {
+									setNote({ ...note, pinned: true });
+									e.stopPropagation();
+								}}
+								className="absolute top-2 right-2 cursor-pointer"
+							/>
+						)}
+						{note.pinned && (
+							<BsPinFill
+								size={24}
+								onClick={(e) => {
+									setNote({ ...note, pinned: false });
+									e.stopPropagation();
+								}}
+								className="absolute top-2 right-2 cursor-pointer"
+							/>
+						)}
+
 						<textarea
 							rows={3}
 							placeholder="Take a note..."

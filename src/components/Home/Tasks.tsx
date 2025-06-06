@@ -34,14 +34,13 @@ export default function Tasks() {
 					table: "tasks",
 				},
 				(payload) => {
-					console.log(payload.eventType);
-
 					const newTask = payload.new as Task;
+					const oldTask = payload.old as Task;
 					if (payload.eventType === "INSERT") taskStore.addTask(newTask);
 					else if (payload.eventType === "UPDATE")
 						taskStore.updateTask(newTask.id, newTask);
 					else if (payload.eventType === "DELETE")
-						taskStore.deleteTask(newTask.id);
+						taskStore.deleteTask(oldTask.id);
 				},
 			)
 			.subscribe((status) => {

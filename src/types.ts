@@ -5,6 +5,6 @@ export type Task = {
 	description: string;
 	updated_at: Date;
 	author: string;
-	status: "PENDING" | "COMPLETED" | "DELETED";
+	status: "PENDING" | "COMPLETED" | "DELETED" | "ARCHIVED";
 	pinned: boolean;
 };
