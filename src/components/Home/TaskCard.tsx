@@ -11,7 +11,8 @@ export default function TaskCard(props: Task) {
 	const [openEdit, setOpenEdit] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 
-	const handlePinClick = async () => {
+	const handlePinClick = async (e: MouseEvent<SVGElement>) => {
+		e.stopPropagation();
 		await supabase
 			.from("tasks")
 			.update({ pinned: props.pinned ? "FALSE" : "TRUE" })
@@ -72,9 +73,11 @@ export default function TaskCard(props: Task) {
 
 				<h3 className="text-xl font-semibold px-4">{props.title}</h3>
 				<p className="text-gray-600 px-4">{props.description}</p>
-				<div className="flex items-center justify-end mt-4 border-t p-2 ">
+				<div className="flex items-center justify-end mt-4 p-2 ">
 					<HiOutlineDotsVertical
-						className="hover:bg-gray-200 rounded-full"
+						className={`hover:bg-gray-200 rounded-full ${
+							isHovered ? "opacity-100" : "opacity-0"
+						}`}
 						size={20}
 						onClick={handleOptionsClick}
 					/>

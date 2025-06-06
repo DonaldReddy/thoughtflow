@@ -41,7 +41,7 @@ export default function NavBar() {
 			</div>
 
 			{user && (
-				<div className="w-3/5">
+				<div className="w-3/5 max-w-3xl">
 					<label className="flex items-center gap-x-2 w-full bg-gray-200 px-2 rounded-md">
 						<IoSearchOutline size={26} />
 
