@@ -12,6 +12,7 @@ class TaskStore {
 			setTasks: action,
 			updateTask: action,
 			deleteTask: action,
+			clearTasks: action,
 			getCompletedTasks: computed,
 			getPendingTasks: computed,
 			getUnpinnedTasks: computed,
@@ -57,6 +58,10 @@ class TaskStore {
 
 	deleteTask(taskId: number) {
 		this.tasks = this.tasks.filter((task) => task.id !== taskId);
+	}
+
+	clearTasks() {
+		this.tasks = [];
 	}
 
 	get getPinnedTasks() {

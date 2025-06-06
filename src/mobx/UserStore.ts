@@ -10,6 +10,7 @@ class UserStore {
 		makeObservable(this, {
 			user: observable,
 			setUser: action,
+			signOut: action,
 			isAuthenticated: computed,
 		});
 		makePersistable(this, {
@@ -21,6 +22,11 @@ class UserStore {
 
 	setUser(user: User | null) {
 		this.user = user;
+	}
+
+	signOut() {
+		this.user = null;
+		window.localStorage.removeItem("UserStore");
 	}
 
 	get isAuthenticated() {

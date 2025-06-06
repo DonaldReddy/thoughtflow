@@ -2,13 +2,14 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import { userStore } from "../mobx/UserStore";
 import { supabase } from "../supabase/client";
+import Loader from "../components/Loader";
 
 export default function SignIn() {
 	const [loginInfo, setLoginInfo] = useState({
 		email: "",
 		password: "",
 	});
-
+	const [loading, setLoading] = useState(false);
 	const user = userStore.user;
 	const navigate = useNavigate();
 
@@ -24,6 +25,7 @@ export default function SignIn() {
 		try {
 			e.preventDefault();
 			if (validateForm()) {
+				setLoading(true);
 				const response = await supabase.auth.signInWithPassword({
 					email: loginInfo.email,
 					password: loginInfo.password,
@@ -42,6 +44,8 @@ export default function SignIn() {
 		} catch (error) {
 			console.error("Error during sign in:", error);
 			alert("An error occurred during sign in. Please try again.");
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -77,9 +81,10 @@ export default function SignIn() {
 				/>
 				<button
 					type="submit"
-					className="bg-blue-500 text-white p-2 rounded-md cursor-pointer"
+					className="bg-blue-500 text-white p-2 rounded-md cursor-pointer flex items-center justify-center"
+					disabled={loading}
 				>
-					Sign In
+					{loading ? <Loader /> : "Sign In"}
 				</button>
 				<p className="text-center text-gray-500">
 					Don't have an account?{" "}

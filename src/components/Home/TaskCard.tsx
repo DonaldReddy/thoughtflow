@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Task } from "../../types";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { BsPin } from "react-icons/bs";
+import { BsPin, BsPinAngleFill } from "react-icons/bs";
 import { supabase } from "../../supabase/client";
 
 export default function TaskCard(props: Task) {
@@ -28,13 +28,23 @@ export default function TaskCard(props: Task) {
 				size={20}
 			/>
 
-			<BsPin
-				className={`absolute right-2 top-1 transition-all duration-500 ease-in-out cursor-pointer ${
-					isHovered ? "opacity-100" : "opacity-0"
-				}`}
-				size={20}
-				onClick={handlePinClick}
-			/>
+			{props.pinned && (
+				<BsPinAngleFill
+					className={`absolute right-2 top-1 transition-all duration-500 ease-in-out cursor-pointer`}
+					size={20}
+					onClick={handlePinClick}
+				/>
+			)}
+
+			{!props.pinned && (
+				<BsPin
+					className={`absolute right-2 top-1 transition-all duration-500 ease-in-out cursor-pointer ${
+						isHovered ? "opacity-100" : "opacity-0"
+					}`}
+					size={20}
+					onClick={handlePinClick}
+				/>
+			)}
 
 			<h3 className="text-xl font-semibold">{props.title}</h3>
 			<p className="text-gray-600">{props.description}</p>
